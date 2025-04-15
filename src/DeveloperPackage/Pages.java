@@ -83,10 +83,16 @@ public class Pages {
             System.out.println(currentPlayer + "'s turn: ");
             System.out.print("--> ");
             // get entries from player
-            int startY = scanner.nextInt();
-            int startX = scanner.nextInt();
-            int destY = scanner.nextInt();
-            int destX = scanner.nextInt();
+            String start = scanner.next();
+            String dest = scanner.next();
+
+            int[] entry1 = transfer(start);
+            int[] entry2 = transfer(dest);
+
+            int startY = entry1[0];
+            int startX = entry1[1];
+            int destY = entry2[0];
+            int destX = entry2[1];
 
             // try to move
             Check.captureOrMove(startY, startX, destY, destX);
@@ -105,5 +111,35 @@ public class Pages {
     // exit program page
     public static void exitProgram() {
         System.exit(0);
+    }
+
+    private static int[] transfer(String entry) {
+        char column = entry.charAt(0);
+        char row = entry.charAt(1);
+
+        int c;
+        int r;
+
+        if (column == 'a') c = 0;
+        else if (column == 'b') c = 1;
+        else if (column == 'c') c = 2;
+        else if (column == 'd') c = 3;
+        else if (column == 'e') c = 4;
+        else if (column == 'f') c = 5;
+        else if (column == 'g') c = 6;
+        else c = 7;
+
+        if (row == '8') r = 0;
+        else if (row == '7') r = 1;
+        else if (row == '6') r = 2;
+        else if (row == '5') r = 3;
+        else if (row == '4') r = 4;
+        else if (row == '3') r = 5;
+        else if (row == '2') r = 6;
+        else r = 7;
+
+        return new int[] {r, c};
+        
+        
     }
 }
