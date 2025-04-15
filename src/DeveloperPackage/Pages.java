@@ -94,6 +94,11 @@ public class Pages {
             int destY = entry2[0];
             int destX = entry2[1];
 
+            if (Check.isPositionNull(startY, startX)) {
+                Errors.nullPositionSelected();
+                continue;
+            }
+
             // try to move
             Check.captureOrMove(startY, startX, destY, destX);
         }

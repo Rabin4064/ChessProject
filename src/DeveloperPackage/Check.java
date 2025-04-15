@@ -80,4 +80,12 @@ public class Check {
         }
         return true;
     }
+
+    // check if the start position is null
+    public static boolean isPositionNull(int startY, int startX) {
+        if (Board.board[startY][startX] == null) {
+            return true;
+        }
+        return false;
+    }
 }
