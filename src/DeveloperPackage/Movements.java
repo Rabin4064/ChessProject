@@ -15,7 +15,7 @@ public class Movements {
             Board.board[startY][startX] = null;
             piece.pos[1] = destX;
             piece.pos[0] = destY;
-            piece.setHasMoved(true);
+            piece.hasMoved++;
             Pages.switchPlayer();
 
         } else {

@@ -6,23 +6,15 @@ public abstract class Pieces {
     protected final String color;
     public int[] pos;
     protected String symbol;
-    private boolean hasMoved;
+    public int hasMoved;
+
+
     // create a piece
     public Pieces(String color, int y, int x) {
         this.color = color;
         this.pos = new int[]{y, x};
-        this.hasMoved = false;
+        this.hasMoved = 0;
     }
-    //getter for hasMoved
-    public boolean hasMoved(){
-        return hasMoved;
-    }
-    //setter for hasMoved
-
-    public void setHasMoved(boolean hasMoved) {
-        this.hasMoved = hasMoved;
-    }
-
     //get symbol of piece
     public String getSymbol(){
         return symbol;

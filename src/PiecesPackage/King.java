@@ -16,6 +16,7 @@ public class King extends Pieces {
     // override isValidMove for king movements
     @Override
     public boolean isValidMove(int destY, int destX) {
+
         int startX = this.pos[1];
         int startY = this.pos[0];
 
@@ -25,25 +26,25 @@ public class King extends Pieces {
 
 //        if(dx <= 1 && dy <= 1)
         // white castling
-        if (this.getColor().equals("white") && this.pos[0] == 7 && this.pos[1] == 4 && dy == 0 && dx == 2) {
+        if (this.getColor().equals("white") && startY == 7 && startX == 4 && dy == 0 && dx == 2) {
             // left castling
-            if (Check.isPathClear(this.pos[0], this.pos[1], 7, 1)) {
-                Movements.castling(this.pos[0], this.pos[1], 7, 2);
+            if (Check.isPathClear(startY, startX, 7, 1)) {
+                Movements.castling(startY, startX, 7, 2);
                 return false;
             // right castling
-            } else if (Check.isPathClear(this.pos[0], this.pos[1], 7, 6)) {
-                Movements.castling(this.pos[0], this.pos[1], 7, 6);
+            } else if (Check.isPathClear(startY, startX, 7, 6)) {
+                Movements.castling(startY, startX, 7, 6);
                 return false;
             }
         // black castling
-        } else if (this.getColor().equals("black") && this.pos[0] == 0 && this.pos[1] == 4 && dy == 0 && dx == 2) {
+        } else if (this.getColor().equals("black") && startY == 0 && startX == 4 && dy == 0 && dx == 2) {
             // left castling
-            if (destY == 0 && destX == 2 && Check.isPathClear(this.pos[0], this.pos[1], 0, 1)) {
-                Movements.castling(this.pos[0], this.pos[1], 0, 2);
+            if (destY == 0 && destX == 2 && Check.isPathClear(startY, startX, 0, 1)) {
+                Movements.castling(startY, startX, 0, 2);
                 return false;
             // right castling
-            } else if (Check.isPathClear(this.pos[0], this.pos[1], 0, 6)) {
-                Movements.castling(this.pos[0], this.pos[1], 0, 6);
+            } else if (Check.isPathClear(startY, startX, 0, 6)) {
+                Movements.castling(startY, startX, 0, 6);
                 return false;
             }
         }

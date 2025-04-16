@@ -14,8 +14,11 @@ public class Knight extends Pieces {
     // override isValidMove for knight  movements
     @Override
     public boolean isValidMove(int destY, int destX) {
-        int dx = Math.abs(this.pos[1] - destX);
-        int dy = Math.abs(this.pos[0] - destY);
+        int startX = this.pos[1];
+        int startY = this.pos[0];
+
+        int dx = Math.abs(startX - destX);
+        int dy = Math.abs(startY - destY);
         return (dx == 1 && dy == 2) || (dx == 2 && dy == 1);
 
     }

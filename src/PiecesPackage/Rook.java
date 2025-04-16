@@ -16,8 +16,10 @@ public class Rook extends Pieces {
     // override isValidMove for rook movements
     @Override
     public boolean isValidMove(int destY, int destX) {
-        int dx = Math.abs(this.pos[1] - destX);
-        int dy = Math.abs(this.pos[0] - destY);
-        return (dx == 0 || dy == 0) && Check.isPathClear(this.pos[0], this.pos[1], destY, destX);
+        int startX = this.pos[1];
+        int startY = this.pos[0];
+        int dx = Math.abs(startX - destX);
+        int dy = Math.abs(startY - destY);
+        return (dx == 0 || dy == 0) && Check.isPathClear(startY, startX, destY, destX);
     }
 }

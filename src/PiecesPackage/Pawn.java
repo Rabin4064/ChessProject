@@ -32,14 +32,14 @@ public class Pawn extends Pieces {
             forwardDirection = 1;
             startingRow = 1; // may be used later
         }
-        // standard 1 sqaure move
+        // standard 1 square move
         if(dx == 0 && dy == forwardDirection){
             return Check.isDestNull(destY, destX);
         }
 
         // initial 2 sare move
-        if(!this.hasMoved() && dx == 0 && dy == 2 * forwardDirection){
-            // check if there is a piece blocking the 2 sqaure move
+        if(this.hasMoved == 0 && dx == 0 && dy == 2 * forwardDirection){
+            // check if there is a piece blocking the 2 square move
             int middleY = startY + forwardDirection;
             return Check.isDestNull(middleY, startX) && Check.isDestNull(destY, destX);
         }
@@ -49,6 +49,18 @@ public class Pawn extends Pieces {
         if(Math.abs(dx) == 1 && dy == forwardDirection){
             //check if dest is enemy and is not null
             Pieces destPiece = Board.getPieceAt(destY, destX);
+            Pieces leftPiece = Board.getPieceAt(destY + forwardDirection, destX -1);
+            String lp = leftPiece.toString();
+            Pieces rightPiece = Board.getPieceAt(destY + forwardDirection, destX + 1);
+            String rp = rightPiece.toString();
+            boolean conditionLeft = lp.equals("Pawn") && leftPiece.hasMoved == 1;
+            boolean conditionRight = rp.equals("Pawn") && rightPiece.hasMoved == 1;
+            if(destPiece == null && leftPiece != null){
+                return conditionLeft;
+            }
+            if(destPiece == null && rightPiece != null){
+                return conditionRight;
+            }
             if(destPiece != null){
                 return !destPiece.getColor().equals(this.getColor());
             }
