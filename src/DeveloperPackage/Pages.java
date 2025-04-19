@@ -80,6 +80,8 @@ public class Pages {
             System.out.println("-------------------------------------");
             // show the board
             board.displayBoard();
+//            Check.pawnPromotionCheck();
+
             System.out.println(currentPlayer + "'s turn: ");
             System.out.print("--> ");
             // get entries from player
@@ -147,4 +149,18 @@ public class Pages {
         
         
     }
+
+//    public static void pawnPromotion() {
+//        System.out.print("""
+//                Your Soldier has reached last row!
+//                Choose your HighRanked piece that you want to convert it to:
+//                1. Queen ♛
+//                2. Bishop ♝
+//                3. Knight ♞
+//                4. Rook ♜
+//                Enter the number of your choice:
+//                -->\s""");
+//        Check.checkInputForPawnPromotion(scanner.nextInt());
+//
+//    }
 }

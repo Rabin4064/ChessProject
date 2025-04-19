@@ -28,6 +28,19 @@ public class Check {
         }
     }
 
+//    public static void checkInputForPawnPromotion(int choice) {
+//        switch (choice){
+//            case 1 -> ;
+//            case 2 -> ;
+//            case 3 -> ;
+//            case 4 -> ;
+//            default -> {
+//                System.out.println("Invalid choice...");
+//                Pages.pawnPromotion();
+//            }
+//        }
+//    }
+
     // find move or capture action
     public static void captureOrMove(int startY, int startX, int destY, int destX) {
         if(!turnCheck(startY, startX)){
@@ -88,4 +101,11 @@ public class Check {
         }
         return false;
     }
+
+    // pawn promotion
+//    public static void pawnPromotionCheck() {
+//        if () {
+//            Pages.pawnPromotion();
+//        }
+//    }
 }

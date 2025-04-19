@@ -45,7 +45,6 @@ public class Pawn extends Pieces {
         }
 
         // capturing
-
         if(Math.abs(dx) == 1 && dy == forwardDirection){
             //check if dest is enemy and is not null
             Pieces destPiece = Board.getPieceAt(destY, destX);
