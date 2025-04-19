@@ -6,14 +6,14 @@ public abstract class Pieces {
     protected final String color;
     public int[] pos;
     protected String symbol;
-    public int hasMoved;
+    public int moveCount;
 
 
     // create a piece
     public Pieces(String color, int y, int x) {
         this.color = color;
         this.pos = new int[]{y, x};
-        this.hasMoved = 0;
+        this.moveCount = 0;
     }
     //get symbol of piece
     public String getSymbol(){

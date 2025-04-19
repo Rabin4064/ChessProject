@@ -5,7 +5,7 @@ import PiecesPackage.*;
 public class Board {
     
     // create board for game
-    protected static Pieces[][] board;
+    public static Pieces[][] board;
     private static final char[] column = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 
     // make board [8][8]
@@ -58,6 +58,14 @@ public class Board {
     // return the place that the piece is at 
     public static Pieces getPieceAt(int y, int x) {
         return board[y][x];
+    }
+
+    // get type of the piece
+    public static String getType(Pieces p){
+        if(p == null){
+            return "null";
+        }
+        return p.getClass().getSimpleName();
     }
 
     // show board

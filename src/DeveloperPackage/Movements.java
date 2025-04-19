@@ -1,8 +1,9 @@
 package DeveloperPackage;
 
 
-public class Movements {
+import PiecesPackage.Pawn;
 
+public class Movements {
     // move piece
     public static void captureAndMove(int startY, int startX, int destY, int destX) {
         // select the piece that it is in the first place
@@ -15,8 +16,11 @@ public class Movements {
             Board.board[startY][startX] = null;
             piece.pos[1] = destX;
             piece.pos[0] = destY;
-            piece.hasMoved++;
+            piece.moveCount++;
             Pages.switchPlayer();
+            if(Board.getType(piece).equals("Pawn")){
+                ((Pawn)piece).resetEnPassantFlag();
+            }
 
         } else {
             Errors.cantMove();
@@ -63,4 +67,5 @@ public class Movements {
         piece.pos[1] = destX;
         piece.pos[0] = destY;
     }
+
 }
