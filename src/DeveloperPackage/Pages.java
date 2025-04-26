@@ -131,4 +131,27 @@ public class Pages {
         
         
     }
+
+    // pawn promotion page
+    public static int pawnPromotion(String color) {
+        if (color.equals("white")) {
+            System.out.println("""
+                Your soldier has reach the last row!
+                which one do you want to convert it to? (enter the number)
+                1. Queen ♛
+                2. Bishop ♝
+                3. Knight ♞
+                4. Rook ♜""");
+        } else {
+            System.out.println("""
+                Your soldier has reach the last row!
+                which one do you want to convert it to? (enter the number)
+                1. Queen ♕
+                2. Bishop ♗
+                3. Knight ♘
+                4. Rook ♖""");
+        }
+        return scanner.nextInt();
+    }
+
 }

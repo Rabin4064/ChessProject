@@ -1,7 +1,7 @@
 package DeveloperPackage;
 
 
-import PiecesPackage.Pawn;
+import PiecesPackage.*;
 
 public class Movements {
     // move piece
@@ -25,6 +25,33 @@ public class Movements {
         } else {
             Errors.cantMove();
         }
+
+
+        // if a pawn has reach the last row
+        if (Board.getType(piece).equals("Pawn")) {
+            if (piece.getColor().equals("white") && piece.pos[0] == 0) {
+                int choose = Pages.pawnPromotion("white");
+                switch (choose) {
+                    case 1 -> Board.board[destY][destX] = new Queen("white", destY, destX);
+                    case 2 -> Board.board[destY][destX] = new Bishop("white", destY, destX);
+                    case 3 -> Board.board[destY][destX] = new Knight("white", destY, destX);
+                    case 4 -> Board.board[destY][destX] = new Rook("white", destY, destX);
+                    default -> Errors.cantPromotion();
+                }
+
+            } else if (piece.getColor().equals("black") && piece.pos[0] == 7) {
+                int choose = Pages.pawnPromotion("black");
+                switch (choose) {
+                    case 1 -> Board.board[destY][destX] = new Queen("black", destY, destX);
+                    case 2 -> Board.board[destY][destX] = new Bishop("black", destY, destX);
+                    case 3 -> Board.board[destY][destX] = new Knight("black", destY, destX);
+                    case 4 -> Board.board[destY][destX] = new Rook("black", destY, destX);
+                    default -> Errors.cantPromotion();
+                }
+
+            }
+        }
+
     }
 
     // castling

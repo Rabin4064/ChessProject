@@ -41,7 +41,8 @@ public class Check {
         }
     }
     public static boolean turnCheck(int startY, int startX){
-        return Board.getPieceAt(startY, startX).getColor().equals(Pages.currentPlayer);
+        return true;
+//        return Board.getPieceAt(startY, startX).getColor().equals(Pages.currentPlayer);
     }
 
     // check if a piece can move or not

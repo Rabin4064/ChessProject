@@ -15,4 +15,9 @@ public class Errors {
     public static void nullPositionSelected() {
         System.out.println("You have to choose a piece!");
     }
+
+    // can not do pawn promotion
+    public static void cantPromotion() {
+        System.out.println("You entered an invalid choose!");
+    }
 }

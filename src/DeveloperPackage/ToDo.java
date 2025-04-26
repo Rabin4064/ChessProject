@@ -29,11 +29,11 @@ public class ToDo {
             **capture(isValidMove + Movements, getColor), is in Board class. [MR]
             **move [MR]
         **castling [MR]
-        pawn promotion
+        **pawn promotion [MR]
 
     pages class:
         **turn [AA]
-        input method [SM]
+        **input method [SM]
         single player --> AI
 
      */
