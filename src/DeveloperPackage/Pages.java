@@ -40,24 +40,8 @@ public class Pages {
     // help
     public static void help() {
         System.out.println("""
-                to move:
-                  in order to move a piece, enter the current position of the piece,
-                  following by the destination position.
-                  tip:
-                    the squares start from the index[0][0] and end at index[8][8].
-                  for example:
-                    if the white player wants to move his pawn from a2 to a3
-                    he has to imagine an 8 by 8 matrix and enter: 6 0 5 0 (from [6][0] to [5][0])
-                board:
-                  imagine the board like this:
-                    a8 b8 c8 d8 e8 f8 g8 h8     -->     [0][0] [0][1] [0][2] [0][3] [0][4] [0][5] [0][6] [0][7]
-                    a7 b7 c7 d7 e7 f7 g7 h7     -->     [1][0] [1][1] [1][2] [1][3] [1][4] [1][5] [1][6] [1][7]
-                    a6 b6 c6 d6 e6 f6 g6 h6     -->     [2][0] [2][1] [2][2] [2][3] [2][4] [2][5] [2][6] [2][7]
-                    a5 b5 c5 d5 e5 f5 g5 h5     -->     [3][0] [3][1] [3][2] [3][3] [3][4] [3][5] [3][6] [3][7]
-                    a4 b4 c4 d4 e4 f4 g4 h4     -->     [4][0] [4][1] [4][2] [4][3] [4][4] [4][5] [4][6] [4][7]
-                    a3 b3 c3 d3 e3 f3 g3 h3     -->     [5][0] [5][1] [5][2] [5][3] [5][4] [5][5] [5][6] [5][7]
-                    a2 b2 c2 d2 e2 f2 g2 h2     -->     [6][0] [6][1] [6][2] [6][3] [6][4] [6][5] [6][6] [6][7]
-                    a1 b1 c1 d1 e1 f1 g1 h1     -->     [7][0] [7][1] [7][2] [7][3] [7][4] [7][5] [7][6] [7][7]""");
+                to move a piece you have to enter the first and the second place.
+                for example, if you want to move the white pawn form a2 to a3 just enter like this: a2 a3""");
 
         // return to the first page
         System.out.println("-------------------------------------");
