@@ -61,6 +61,7 @@ public class Pages {
     // multiplayer page for gaming with another user
     public static void multiPlayPage() {
         while (true) {
+
             System.out.println("-------------------------------------");
             // show the board
             board.displayBoard();
