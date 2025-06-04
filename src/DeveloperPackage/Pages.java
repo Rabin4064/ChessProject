@@ -109,27 +109,31 @@ public class Pages {
         int c;
         int r;
 
-        if (column == 'a') c = 0;
-        else if (column == 'b') c = 1;
-        else if (column == 'c') c = 2;
-        else if (column == 'd') c = 3;
-        else if (column == 'e') c = 4;
-        else if (column == 'f') c = 5;
-        else if (column == 'g') c = 6;
-        else c = 7;
+        c = switch (column) {
+            case 'a' -> 0;
+            case 'b' -> 1;
+            case 'c' -> 2;
+            case 'd' -> 3;
+            case 'e' -> 4;
+            case 'f' -> 5;
+            case 'g' -> 6;
+            case 'h' -> 7;
+            default -> -1;
+        };
 
-        if (row == '8') r = 0;
-        else if (row == '7') r = 1;
-        else if (row == '6') r = 2;
-        else if (row == '5') r = 3;
-        else if (row == '4') r = 4;
-        else if (row == '3') r = 5;
-        else if (row == '2') r = 6;
-        else r = 7;
+        r = switch (row) {
+            case '8' -> 0;
+            case '7' -> 1;
+            case '6' -> 2;
+            case '5' -> 3;
+            case '4' -> 4;
+            case '3' -> 5;
+            case '2' -> 6;
+            case '1' -> 7;
+            default -> -1;
+        };
 
         return new int[] {r, c};
-        
-        
     }
 
     // pawn promotion page
