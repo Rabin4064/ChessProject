@@ -1,99 +1,100 @@
 package DeveloperPackage;
 
-
 import PiecesPackage.*;
 
-
 public class Movements {
-    // move piece
-    public static void captureAndMove(int startY, int startX, int destY, int destX) {
-        // select the piece that it is in the first place
-        Pieces piece = Board.board[startY][startX];
 
-        if (piece.isValidMove(destY, destX)) {
-            // move piece and capture destination
+    public static void executeMove(int startY, int startX, int destY, int destX) {
+        Pieces piece = Board.getPieceAt(startY, startX);
 
-            Board.board[destY][destX] = piece;
-            Board.board[startY][startX] = null;
-            piece.pos[1] = destX;
-            piece.pos[0] = destY;
+        if (piece == null) {
+            Errors.nullPositionSelected();
+            return;
+        }
+
+        if (!Check.turnCheck(startY, startX)) {
+            Errors.notYourTurn();
+            return;
+        }
+
+        if (piece.isValidMove(destY, destX) && Check.canMove(startY, startX, destY, destX)) {
+            //special handling for en passant capture
+            handleEnPassantCapture(piece, startY, startX, destY, destX);
+            
+            //handle castling move
+            if (Board.getType(piece).equals("King") && Math.abs(destX - startX) == 2) {
+                moveCastle(piece, startY, startX, destY, destX);
+            } else {
+                //regular move
+                movePiece(piece, startY, startX, destY, destX);
+            }
+
+            //set en passant flag for pawns after a two-square move
+            if (Board.getType(piece).equals("Pawn") && Math.abs(destY - startY) == 2) {
+                ((Pawn)piece).setJustMovedTwoSquares(true);
+            }
+            
+            //handle pawn promotion
+            handlePawnPromotion(piece, destY, destX);
+            
             piece.moveCount++;
             Pages.switchPlayer();
-            if(Board.getType(piece).equals("Pawn")){
-                ((Pawn)piece).resetEnPassantFlag();
+
+            if (Check.isKingInCheck(Pages.currentPlayer)) {
+                System.out.println(Pages.currentPlayer + " king is in check");
             }
-            if(Check.isKingInCheck(Pages.currentPlayer)) System.out.println(Pages.currentPlayer + " king is in check");
+
         } else {
             Errors.cantMove();
         }
-
-
-        // if a pawn has reach the last row
-        if (Board.getType(piece).equals("Pawn")) {
-            if (piece.getColor().equals("white") && piece.pos[0] == 0) {
-                int choose = Pages.pawnPromotion("white");
-                switch (choose) {
-                    case 1 -> Board.board[destY][destX] = new Queen("white", destY, destX);
-                    case 2 -> Board.board[destY][destX] = new Bishop("white", destY, destX);
-                    case 3 -> Board.board[destY][destX] = new Knight("white", destY, destX);
-                    case 4 -> Board.board[destY][destX] = new Rook("white", destY, destX);
-                    default -> Errors.cantPromotion();
-                }
-
-            } else if (piece.getColor().equals("black") && piece.pos[0] == 7) {
-                int choose = Pages.pawnPromotion("black");
-                switch (choose) {
-                    case 1 -> Board.board[destY][destX] = new Queen("black", destY, destX);
-                    case 2 -> Board.board[destY][destX] = new Bishop("black", destY, destX);
-                    case 3 -> Board.board[destY][destX] = new Knight("black", destY, destX);
-                    case 4 -> Board.board[destY][destX] = new Rook("black", destY, destX);
-                    default -> Errors.cantPromotion();
-                }
-
-            }
-        }
-
     }
 
-    // castling
-    public static void castling(int startY, int startX, int destY, int destX) {
-        Pieces piece = Board.getPieceAt(startY, startX);
-        // white castling
-        if (piece.getColor().equals("white") && piece.pos[0] == 7 && piece.pos[1] == 4) {
-            // left castling
-            if (destY == 7 && destX == 2 && Check.isPathClear(piece.pos[0], piece.pos[1], 7, 1)) {
-                Movements.moveCastle(piece.pos[0], piece.pos[1], 7, 2);
-                Movements.moveCastle(7, 0, 7, 3);
-            // right castling
-            } if (destY == 7 && destX == 6 && Check.isPathClear(piece.pos[0], piece.pos[1], 7, 6)) {
-                Movements.moveCastle(piece.pos[0], piece.pos[1], 7, 6);
-                Movements.moveCastle(7, 7, 7, 5);
-            }
-
-        // black castling
-        } else if (piece.getColor().equals("black") && piece.pos[0] == 0 && piece.pos[1] == 4) {
-            // left castling
-            if (destY == 0 && destX == 2 && Check.isPathClear(piece.pos[0], piece.pos[1], 0, 1)) {
-                Movements.moveCastle(piece.pos[0], piece.pos[1], 0, 2);
-                Movements.moveCastle(0, 0, 0, 3);
-            // right castling
-            } else if (destY == 0 && destX == 6 && Check.isPathClear(piece.pos[0], piece.pos[1], 0, 6)) {
-                Movements.moveCastle(piece.pos[0], piece.pos[1], 0, 6);
-                Movements.moveCastle(0, 7, 0, 5);
-            }
-        }
-    }
-
-    // castling
-    public static void moveCastle(int startY, int startX, int destY, int destX) {
-        // select the piece that it is in the first place
-        Pieces piece = Board.board[startY][startX];
-
-        // move
+    private static void movePiece(Pieces piece, int startY, int startX, int destY, int destX) {
         Board.board[destY][destX] = piece;
         Board.board[startY][startX] = null;
-        piece.pos[1] = destX;
         piece.pos[0] = destY;
+        piece.pos[1] = destX;
     }
 
+    private static void moveCastle(Pieces king, int startY, int startX, int destY, int destX) {
+        // Move King
+        movePiece(king, startY, startX, destY, destX);
+        // Move Rook
+        if (destX < startX) { //queen side
+            Pieces rook = Board.getPieceAt(startY, 0);
+            movePiece(rook, startY, 0, startY, 3);
+        } else { //king side
+            Pieces rook = Board.getPieceAt(startY, 7);
+            movePiece(rook, startY, 7, startY, 5);
+        }
+    }
+
+    private static void handleEnPassantCapture(Pieces piece, int startY, int startX, int destY, int destX) {
+        if (Board.getType(piece).equals("Pawn") && Math.abs(destX - startX) == 1 && Board.getPieceAt(destY, destX) == null) {
+             //remove the captured pawn
+             Board.board[startY][destX] = null;
+        }
+    }
+
+    private static void handlePawnPromotion(Pieces piece, int destY, int destX) {
+        if (!Board.getType(piece).equals("Pawn")) return;
+
+        boolean isWhitePromotion = piece.getColor().equals("white") && destY == 0;
+        boolean isBlackPromotion = piece.getColor().equals("black") && destY == 7;
+
+        if (isWhitePromotion || isBlackPromotion) {
+            int choice = Pages.pawnPromotion(piece.getColor());
+            switch (choice) {
+                case 1 -> Board.board[destY][destX] = new Queen(piece.getColor(), destY, destX);
+                case 2 -> Board.board[destY][destX] = new Bishop(piece.getColor(), destY, destX);
+                case 3 -> Board.board[destY][destX] = new Knight(piece.getColor(), destY, destX);
+                case 4 -> Board.board[destY][destX] = new Rook(piece.getColor(), destY, destX);
+                default -> {
+                    Errors.cantPromotion();
+                    //default choice will be the quueen
+                    Board.board[destY][destX] = new Queen(piece.getColor(), destY, destX);
+                }
+            }
+        }
+    }
 }
