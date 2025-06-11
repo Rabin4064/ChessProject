@@ -73,9 +73,9 @@ public class Check {
         }
     }
 
-    public static void captureOrMove(int startY, int startX, int destY, int destX) {
-        Movements.executeMove(startY, startX, destY, destX);
-    }
+//    public static void captureOrMove(int startY, int startX, int destY, int destX) {
+//        Movements.executeMove(startY, startX, destY, destX);
+//    }
 
     public static boolean turnCheck(int startY, int startX) {
         Pieces piece = Board.getPieceAt(startY, startX);
