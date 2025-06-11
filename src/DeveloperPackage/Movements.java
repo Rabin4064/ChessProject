@@ -49,6 +49,16 @@ public class Movements {
         }
     }
 
+    // a simple movement for undo and redo
+    protected static void undoAndRedo(int startY, int startX, int destY, int destX) {
+        Pieces piece = Board.getPieceAt(startY, startX);
+        if (piece == null) {
+            Errors.nullPositionSelected();
+            return;
+        }
+        movePiece(piece, startY, startX, destY, destX);
+    }
+
     private static void movePiece(Pieces piece, int startY, int startX, int destY, int destX) {
         Board.board[destY][destX] = piece;
         Board.board[startY][startX] = null;
@@ -62,10 +72,19 @@ public class Movements {
         // Move Rook
         if (destX < startX) { //queen side
             Pieces rook = Board.getPieceAt(startY, 0);
-            movePiece(rook, startY, 0, startY, 3);
+            if (rook != null) {
+                movePiece(rook, startY, 0, startY, 3);
+            } else {
+                Errors.cantMove();
+            }
+
         } else { //king side
             Pieces rook = Board.getPieceAt(startY, 7);
-            movePiece(rook, startY, 7, startY, 5);
+            if (rook != null) {
+                movePiece(rook, startY, 7, startY, 5);
+            } else {
+                Errors.cantMove();
+            }
         }
     }
 
@@ -91,7 +110,7 @@ public class Movements {
                 case 4 -> Board.board[destY][destX] = new Rook(piece.getColor(), destY, destX);
                 default -> {
                     Errors.cantPromotion();
-                    //default choice will be the quueen
+                    //default choice will be the queen
                     Board.board[destY][destX] = new Queen(piece.getColor(), destY, destX);
                 }
             }
