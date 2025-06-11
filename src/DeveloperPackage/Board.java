@@ -3,7 +3,7 @@ package DeveloperPackage;
 import PiecesPackage.*;
 
 public class Board {
-    
+
     // create board for game
     public static Pieces[][] board;
     private static final char[] column = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
@@ -34,7 +34,7 @@ public class Board {
         board[0][3] = new Queen("black", 0, 3);
         // set king
         board[0][4] = new King("black", 0, 4);
-        
+
         // white
         // set pawns
         for (int i = 0; i < 8; i++) {
@@ -50,13 +50,16 @@ public class Board {
         board[7][2] = new Bishop("white", 7, 2); // left bishop
         board[7][5] = new Bishop("white", 7, 5); // right bishop
         // set queen
-        board[7][3] = new Queen("white", 0, 4);
+        board[7][3] = new Queen("white", 7, 3);
         // set king
         board[7][4] = new King("white", 7, 4);
     }
-    
-    // return the place that the piece is at 
+
+    // return the place that the piece is at
     public static Pieces getPieceAt(int y, int x) {
+        if (y < 0 || y >= 8 || x < 0 || x >= 8) {
+            return null;
+        }
         return board[y][x];
     }
 
@@ -69,12 +72,8 @@ public class Board {
     }
 
     // show board
-//
     public void displayBoard() {
-
-        // display pieces
         int count = 8;
-
         for (int i = 0; i < 8; i++) {
             System.out.print(String.format("%2d ", count));
             for (int j = 0; j < 8; j++) {
@@ -98,11 +97,11 @@ public class Board {
 		for(int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Pieces p = board[i][j];
-                if (getType(p).equals("King") && p.color.equals(color)) {
+                if (p != null && getType(p).equals("King") && p.getColor().equals(color)) {
                     return new int[]{i, j};
                 }
             }
         }
         return null;
-    }	
+    }
 }
