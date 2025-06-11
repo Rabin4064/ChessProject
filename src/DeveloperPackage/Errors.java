@@ -20,4 +20,10 @@ public class Errors {
     public static void cantPromotion() {
         System.out.println("You entered an invalid choose!");
     }
+
+    // can not do the action (for undo and redo)
+    public static void cantdo() {
+        System.out.println("You can't use it!");
+    }
+
 }
