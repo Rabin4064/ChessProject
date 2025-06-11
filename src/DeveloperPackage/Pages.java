@@ -6,6 +6,7 @@ public class Pages {
     // for undo and redo
     private static int[] undo = {-1, -1, -1, -1};
     private static boolean redoFlag = false;
+    private static boolean undoFlag = true;
 
     // create scanner object for getting entry from user
     static Scanner scanner = new Scanner(System.in);
@@ -91,7 +92,7 @@ public class Pages {
 
             // undo
             if (start.equals("undo")) {
-                if (!(undo[0]==-1 || undo[1]==-1 || undo[2]==-1 || undo[3]==-1)) {
+                if (undoFlag && !(undo[0]==-1 || undo[1]==-1 || undo[2]==-1 || undo[3]==-1)) {
                     int startY = undo[2];
                     int startX = undo[3];
                     int destY = undo[0];
@@ -99,6 +100,7 @@ public class Pages {
                     undo = new int[]{startY, startX, destY, destX};
                     Movements.undoAndRedo(startY, startX, destY, destX);
                     redoFlag = true;
+                    undoFlag = false;
                     continue;
                 } else {
                     Errors.cantdo();
@@ -106,7 +108,7 @@ public class Pages {
                 }
             // redo
             } else if (start.equals("redo")) {
-                if (redoFlag || !(undo[0]==-1 || undo[1]==-1 || undo[2]==-1 || undo[3]==-1)) {
+                if (redoFlag && !(undo[0]==-1 || undo[1]==-1 || undo[2]==-1 || undo[3]==-1)) {
                     int startY = undo[2];
                     int startX = undo[3];
                     int destY = undo[0];
@@ -114,6 +116,7 @@ public class Pages {
                     undo = new int[]{startY, startX, destY, destX};
                     Movements.undoAndRedo(startY, startX, destY, destX);
                     redoFlag = false;
+                    undoFlag = true;
                     continue;
                 }else {
                     Errors.cantdo();
