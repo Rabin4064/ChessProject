@@ -3,6 +3,9 @@ package DeveloperPackage;
 import java.util.Scanner;
 
 public class Pages {
+    // for undo and redo
+    private static int[] undo = {-1, -1, -1, -1};
+    private static boolean redoFlag = false;
 
     // create scanner object for getting entry from user
     static Scanner scanner = new Scanner(System.in);
@@ -44,7 +47,8 @@ public class Pages {
     public static void help() {
         System.out.println("""
                 To move a piece you have to enter its current square and the square you want to move it to.
-                For example, to move the pawn from e2 to e4, you would type: e2 e4""");
+                For example, to move the pawn from e2 to e4, you would type: e2 e4
+                also you can use 'undo' and 'redo' by enter it.""");
         System.out.println("-------------------------------------");
         firstPage();
     }
@@ -81,26 +85,62 @@ public class Pages {
                 System.out.println(currentPlayer + " is in check!");
             }
 
-            System.out.print("Enter move (e.g., e2 e4): ");
+            System.out.println("Enter move (e.g., e2 e4):");
+            System.out.print("--> ");
             String start = scanner.next();
+
+            // undo
+            if (start.equals("undo")) {
+                if (!(undo[0]==-1 || undo[1]==-1 || undo[2]==-1 || undo[3]==-1)) {
+                    int startY = undo[2];
+                    int startX = undo[3];
+                    int destY = undo[0];
+                    int destX = undo[1];
+                    undo = new int[]{startY, startX, destY, destX};
+                    Movements.undoAndRedo(startY, startX, destY, destX);
+                    redoFlag = true;
+                    continue;
+                } else {
+                    Errors.cantdo();
+                    continue;
+                }
+            // redo
+            } else if (start.equals("redo")) {
+                if (redoFlag || !(undo[0]==-1 || undo[1]==-1 || undo[2]==-1 || undo[3]==-1)) {
+                    int startY = undo[2];
+                    int startX = undo[3];
+                    int destY = undo[0];
+                    int destX = undo[1];
+                    undo = new int[]{startY, startX, destY, destX};
+                    Movements.undoAndRedo(startY, startX, destY, destX);
+                    redoFlag = false;
+                    continue;
+                }else {
+                    Errors.cantdo();
+                    continue;
+                }
+            }
+
             String dest = scanner.next();
 
             int[] entry1 = transfer(start);
             int[] entry2 = transfer(dest);
-
-            //input validation check
-            if (entry1[0] == -1 || entry1[1] == -1 || entry2[0] == -1 || entry2[1] == -1) {
-                System.out.println("Invalid square format. Use format like 'e2 e4'.");
-                continue;
-            }
 
             int startY = entry1[0];
             int startX = entry1[1];
             int destY = entry2[0];
             int destX = entry2[1];
 
+            undo = new int[]{startY, startX, destY, destX};
+
+            //input validation check
+            if (startY == -1 || startX == -1 || destY == -1 || destX == -1) {
+                System.out.println("Invalid square format. Use format like 'e2 e4'.");
+                continue;
+            }
+
             //try to move
-            Check.captureOrMove(startY, startX, destY, destX);
+            Movements.executeMove(startY, startX, destY, destX);
         }
         //after game ends, return to main menu
         System.out.println("-------------------------------------");
