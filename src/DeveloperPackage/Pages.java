@@ -98,9 +98,17 @@ public class Pages {
                     int destY = undo[0];
                     int destX = undo[1];
                     undo = new int[]{startY, startX, destY, destX};
+                    Pieces piece = Board.getPieceAt(startY, startX);
+                    if (piece == null) {
+                        Errors.nullPositionSelected();
+                        return;
+                    }
+                    piece.moveCount--;
                     Movements.undoAndRedo(startY, startX, destY, destX);
                     redoFlag = true;
                     undoFlag = false;
+                    Pages.switchPlayer();
+
                     continue;
                 } else {
                     Errors.cantdo();
@@ -114,9 +122,17 @@ public class Pages {
                     int destY = undo[0];
                     int destX = undo[1];
                     undo = new int[]{startY, startX, destY, destX};
+                    Pieces piece = Board.getPieceAt(startY, startX);
+                    if (piece == null) {
+                        Errors.nullPositionSelected();
+                        return;
+                    }
+                    piece.moveCount++;
                     Movements.undoAndRedo(startY, startX, destY, destX);
                     redoFlag = false;
                     undoFlag = true;
+                    Pages.switchPlayer();
+
                     continue;
                 }else {
                     Errors.cantdo();
