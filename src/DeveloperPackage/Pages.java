@@ -4,15 +4,19 @@ import java.util.Scanner;
 
 public class Pages {
 
+    // create scanner object for getting entry from user
     static Scanner scanner = new Scanner(System.in);
+    // create the board and turn
     private static Board board;
     public static String currentPlayer;
 
+    // first actions for start game
     public Pages() {
         board = new Board();
         currentPlayer = "white";
     }
 
+    // first method for start the game
     public static void firstPage() {
         System.out.println("""
                 What do you want to do?
@@ -22,6 +26,8 @@ public class Pages {
                   3.Credits
                   4.Exit Game""");
         System.out.print("--> ");
+
+        // check the entry
         int choice;
         try {
             choice = scanner.nextInt();
@@ -34,6 +40,7 @@ public class Pages {
         }
     }
 
+    // help
     public static void help() {
         System.out.println("""
                 To move a piece you have to enter its current square and the square you want to move it to.
@@ -42,10 +49,12 @@ public class Pages {
         firstPage();
     }
 
+    // change the current player
     public static void switchPlayer() {
         currentPlayer = currentPlayer.equals("white") ? "black" : "white";
     }
 
+    // single play page for gaming with AI
     public static void singlePlayPage() {
         // Future implementation for AI
     }
@@ -99,12 +108,15 @@ public class Pages {
         firstPage();
     }
 
+    // authors page for see the authors
     public static void authorsPage() {
         System.out.println("Authors:\n\tAhmadreza Ashtar\n\tMobin RangSaz");
+        // return to the first page
         System.out.println("-------------------------------------");
         firstPage();
     }
 
+    // exit program page
     public static void exitProgram() {
         System.exit(0);
     }
@@ -126,6 +138,7 @@ public class Pages {
         return new int[]{r, c};
     }
 
+    // pawn promotion page
     public static int pawnPromotion(String color) {
         System.out.println("Your pawn has reached the last row!");
         System.out.println("Which piece do you want to promote to? (Enter the number)");
