@@ -17,11 +17,11 @@ public class ToDo {
         **pawn debugging [AA]
 
     check class:
-        en passant [AA]
-        check
-        checkMate
-        draw
-        stalemate
+        **en passant [AA]
+        **check [AA]
+        **checkMate [AA]
+        **draw [AA]
+        **stalemate [AA]
         fifty-moveRule
 
     movement class:
