@@ -111,7 +111,7 @@ public class Pages {
 
                     continue;
                 } else {
-                    Errors.cantdo();
+                    Errors.cantDo();
                     continue;
                 }
             // redo
@@ -135,7 +135,7 @@ public class Pages {
 
                     continue;
                 }else {
-                    Errors.cantdo();
+                    Errors.cantDo();
                     continue;
                 }
             }

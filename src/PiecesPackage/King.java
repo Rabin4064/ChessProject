@@ -24,17 +24,22 @@ public class King extends Pieces {
         if (dx <= 1 && dy <= 1) {
             return true;
         }
-        //brilliant castling condition validation
+
+
+        //castling
+        //have to check if the king passes through attacked squares
         if (dy == 0 && dx == 2 && this.moveCount == 0 && !Check.isKingInCheck(this.color)) {
-            if (destX < startX) {
+            if (destX < startX) { //queen-side
                 Pieces rook = Board.getPieceAt(startY, 0);
                 return rook != null && Board.getType(rook).equals("Rook") && rook.moveCount == 0 &&
-                        Check.isPathClear(startY, startX, startY, 1);
+                        Check.isPathClear(startY, startX, startY, 1) &&
+                        !isSquareUnderAttack(startY, startX - 1, this.color);
             }
-            if (destX > startX) {
+            if (destX > startX) { //king-side
                 Pieces rook = Board.getPieceAt(startY, 7);
                 return rook != null && Board.getType(rook).equals("Rook") && rook.moveCount == 0 &&
-                        Check.isPathClear(startY, startX, startY, 6);
+                        Check.isPathClear(startY, startX, startY, 6) &&
+                        !isSquareUnderAttack(startY, startX + 1, this.color);
             }
         }
         return false;
@@ -62,5 +67,21 @@ public class King extends Pieces {
             moves.add(new int[]{y, x + 2});
         }
         return moves;
+    }
+
+    //check for castling validation
+    private boolean isSquareUnderAttack(int y, int x, String playerColor) {
+        String opponentColor = playerColor.equals("white") ? "black" : "white";
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Pieces p = Board.getPieceAt(i, j);
+                if (p != null && p.getColor().equals(opponentColor)) {
+                    if (p.isValidMove(y, x)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

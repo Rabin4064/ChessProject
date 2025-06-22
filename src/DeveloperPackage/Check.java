@@ -6,47 +6,39 @@ public class Check {
     // hasLegalMoves had to check for valid moves with 4 nested for loops(yes it had to be like that)
     // in order to have a simple logic, so I came up with this logic but we have to get a list of 
     // possibleMoves; this version is a lot more optimized.
-    private static boolean hasLegalMoves(String color) {
+    private static boolean hasNoLegalMoves(String color) {
         for (int startY = 0; startY < 8; startY++) {
             for (int startX = 0; startX < 8; startX++) {
                 Pieces piece = Board.getPieceAt(startY, startX);
                 if (piece != null && piece.getColor().equals(color)) {
-                    //get list of potential moves for this piece.
                     List<int[]> possibleMoves = piece.getPossibleMoves();
-
                     for (int[] move : possibleMoves) {
                         int destY = move[0];
                         int destX = move[1];
 
-                        //check for validation before simulation
-                        if (!canMove(startY, startX, destY, destX)) {
-                            continue;
-                        }
+                        if (piece.isValidMove(destY, destX) && canMove(startY, startX, destY, destX)) {
+                            Pieces capturedPiece = Board.getPieceAt(destY, destX);
+                            Board.board[destY][destX] = piece;
+                            Board.board[startY][startX] = null;
+                            int[] originalPos = piece.pos;
+                            piece.pos = new int[]{destY, destX};
 
-                        //simulate the move
-                        Pieces capturedPiece = Board.getPieceAt(destY, destX);
-                        Board.board[destY][destX] = piece;
-                        Board.board[startY][startX] = null;
-                        int[] originalPos = piece.pos;
-                        piece.pos = new int[]{destY, destX};
+                            if (!isKingInCheck(color)) {
+                                Board.board[startY][startX] = piece;
+                                Board.board[destY][destX] = capturedPiece;
+                                piece.pos = originalPos;
+                                return false;
+                            }
 
-                        if (!isKingInCheck(color)) {
-                            //undo move and return true if a legal move was found
                             Board.board[startY][startX] = piece;
                             Board.board[destY][destX] = capturedPiece;
                             piece.pos = originalPos;
-                            return true;
                         }
-
-                        //undo move
-                        Board.board[startY][startX] = piece;
-                        Board.board[destY][destX] = capturedPiece;
-                        piece.pos = originalPos;
                     }
                 }
             }
         }
-        return false; //no legal moves found
+        return true;
     }
 
     
@@ -92,6 +84,7 @@ public class Check {
     }
 
     public static boolean isFriendlyPieceAt(int startY, int startX, int destY, int destX) {
+        if(Board.getPieceAt(destY,destX) == null) return false;
         return Board.getPieceAt(startY, startX).getColor().equals(Board.getPieceAt(destY, destX).getColor());
     }
 
@@ -135,10 +128,10 @@ public class Check {
     }
     
     public static boolean isCheckmate(String color) {
-        return isKingInCheck(color) && !hasLegalMoves(color);
+        return isKingInCheck(color) && hasNoLegalMoves(color);
     }
     
     public static boolean isStalemate(String color) {
-        return !isKingInCheck(color) && !hasLegalMoves(color);
+        return !isKingInCheck(color) && hasNoLegalMoves(color);
     }
 }

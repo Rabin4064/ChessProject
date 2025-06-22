@@ -17,12 +17,12 @@ public class Errors {
     }
 
     // can not do pawn promotion
-    public static void cantPromotion() {
+    public static void cantPromote() {
         System.out.println("You entered an invalid choose!");
     }
 
     // can not do the action (for undo and redo)
-    public static void cantdo() {
+    public static void cantDo() {
         System.out.println("You can't use it!");
     }
 

@@ -17,6 +17,16 @@ public class Movements {
             return;
         }
 
+        // Reset all en passant flags
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Pieces p = Board.getPieceAt(i, j);
+                if (p != null && Board.getType(p).equals("Pawn")) {
+                    ((Pawn)p).setJustMovedTwoSquares(false);
+                }
+            }
+        }
+
         if (piece.isValidMove(destY, destX) && Check.canMove(startY, startX, destY, destX)) {
             //special handling for en passant capture
             handleEnPassantCapture(piece, startY, startX, destY, destX);
@@ -109,7 +119,7 @@ public class Movements {
                 case 3 -> Board.board[destY][destX] = new Knight(piece.getColor(), destY, destX);
                 case 4 -> Board.board[destY][destX] = new Rook(piece.getColor(), destY, destX);
                 default -> {
-                    Errors.cantPromotion();
+                    Errors.cantPromote();
                     //default choice will be the queen
                     Board.board[destY][destX] = new Queen(piece.getColor(), destY, destX);
                 }

@@ -57,6 +57,7 @@ public class Board {
 
     // return the place that the piece is at
     public static Pieces getPieceAt(int y, int x) {
+        // null position management
         if (y < 0 || y >= 8 || x < 0 || x >= 8) {
             return null;
         }
