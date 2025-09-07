@@ -79,7 +79,10 @@ public class Board {
             System.out.print(String.format("%2d ", count));
             for (int j = 0; j < 8; j++) {
                 if (board[i][j] == null) {
-                    System.out.print(" " + Symbols.NULL + " ");
+                    if ((i+j)%2==0)
+                        System.out.print(" " + Symbols.NULL_BLACK + " ");
+                    else
+                        System.out.print(" " + Symbols.NULL_WHITE + " ");
                 } else {
                     System.out.print(" " + board[i][j].getSymbol() + " ");
                 }

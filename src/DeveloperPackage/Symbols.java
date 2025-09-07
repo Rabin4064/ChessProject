@@ -20,5 +20,6 @@ public class Symbols {
     public static final String BLACK_PAWN = "♙";
 
     // nool
-    public static final String NULL = "☐";
+    public static final String NULL_WHITE = "■";
+    public static final String NULL_BLACK = "☐";
 }
