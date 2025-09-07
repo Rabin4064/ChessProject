@@ -17,7 +17,7 @@ public class Movements {
             return;
         }
 
-        // Reset all en passant flags
+        // reset all en passant flags
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Pieces p = Board.getPieceAt(i, j);
@@ -50,8 +50,9 @@ public class Movements {
             piece.moveCount++;
             Pages.switchPlayer();
 
-            if (Check.isKingInCheck(Pages.currentPlayer)) {
-                System.out.println(Pages.currentPlayer + " king is in check");
+            String playerColor = Pages.currentPlayer;
+            if (Check.isKingInCheck(playerColor)) {
+                System.out.println(playerColor + " king is in check");
             }
 
         } else {

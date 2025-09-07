@@ -19,6 +19,6 @@ public class Symbols {
     public static final String BLACK_KNIGHT = "♘";
     public static final String BLACK_PAWN = "♙";
 
-    // NULLLLLLL
+    // nool
     public static final String NULL = "☐";
 }

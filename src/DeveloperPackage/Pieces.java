@@ -24,7 +24,7 @@ public abstract class Pieces {
         return color;
     }
 
-    // This method is now the primary way to check for valid moves
+    // primary method to check for valid moves
     public abstract boolean isValidMove(int destY, int destX);
 
     //get a list of possible moves 
