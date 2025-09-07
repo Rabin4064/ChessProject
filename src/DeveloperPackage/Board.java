@@ -75,24 +75,29 @@ public class Board {
     // show board
     public void displayBoard() {
         int count = 8;
+        System.out.print("  ");
+        for (char i : column) {
+            System.out.print(" " + i);
+        }
+        System.out.println();
         for (int i = 0; i < 8; i++) {
-            System.out.print(String.format("%2d ", count));
+            System.out.print(String.format("%2d", count));
             for (int j = 0; j < 8; j++) {
                 if (board[i][j] == null) {
                     if ((i+j)%2==0)
-                        System.out.print(" " + Symbols.NULL_BLACK + " ");
+                        System.out.print(" " + Symbols.NULL_BLACK);
                     else
-                        System.out.print(" " + Symbols.NULL_WHITE + " ");
+                        System.out.print(" " + Symbols.NULL_WHITE);
                 } else {
-                    System.out.print(" " + board[i][j].getSymbol() + " ");
+                    System.out.print(" " + board[i][j].getSymbol());
                 }
             }
-            System.out.println();
+            System.out.println(" " + count);
             count--;
         }
-        System.out.print("   ");
+        System.out.print("  ");
         for (char i : column) {
-            System.out.print(" " + i + " ");
+            System.out.print(" " + i);
         }
         System.out.println();
     }
