@@ -23,6 +23,7 @@ public class Pages {
 
     // first method for start the game
     public static void firstPage() {
+        Pages pages = new Pages();
         System.out.println("""
                 What do you want to do?
                   0.Help
@@ -74,6 +75,7 @@ public class Pages {
             System.out.println(currentPlayer + "'s turn.");
 
             //checking for game ending conditions before asking for a move
+            // Check.isCheckmate("white") || Check.isCheckmate("black")
             if (Check.isCheckmate(currentPlayer)) {
                 String winner = currentPlayer.equals("white") ? "Black" : "White";
                 System.out.println("CHECKMATE! " + winner + " wins!");

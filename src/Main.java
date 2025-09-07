@@ -7,7 +7,6 @@ public class Main {
         // say welcome to user
         System.out.println("Welcome to Chess Game!");
         // starting program...
-        Pages pages = new Pages();
         Pages.firstPage();
     }
 }
