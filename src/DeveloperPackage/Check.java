@@ -107,9 +107,9 @@ public class Check {
         return true;
     }
     
-    public static boolean isPositionNull(int startY, int startX) {
-        return Board.getPieceAt(startY, startX) == null;
-    }
+//    public static boolean isPositionNull(int startY, int startX) {
+//        return Board.getPieceAt(startY, startX) == null;
+//    }
     
     public static boolean isKingInCheck(String color) {
         int[] kingPos = Board.findKingPosition(color);

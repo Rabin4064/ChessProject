@@ -10,6 +10,7 @@ public class Pages {
 
     // create scanner object for getting entry from user
     static Scanner scanner = new Scanner(System.in);
+
     // create the board and turn
     private static Board board;
     public static String currentPlayer;
